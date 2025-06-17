@@ -36,3 +36,11 @@ create TABLE Registrations (
     FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
     FOREIGN KEY (OfferingID) REFERENCES CourseOfferings(OfferingID)
 );
+INSERT INTO students1 VALUES('karthika','2322jb01','kay@gmail.com');
+INSERT INTO students1 VALUES('monika','2322jb02','moni@gmail.com');
+
+INSERT INTO courses VALUES('! .bca');
+INSERT INTO courses VALUES('!.bsc.it');
+
+INSERT INTO registration VALUES('25.3.36');
+INSERT INTO registration VALUES('07.04.22');
