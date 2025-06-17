@@ -548,3 +548,304 @@ mysql> select ename,hiredate
 | MILLER | 1982-01-23 |
 +--------+------------+
 3 rows in set (0.00 sec)
+mysql> select countr(*)
+    -> from emp
+    -> where sal<2000 and deptno=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*)
+from emp
+where sal<2000 and deptno=10' at line 1
+mysql> select countr(*)
+    -> from emp
+    -> where sal<2000 and deptno=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*)
+from emp
+where sal<2000 and deptno=10' at line 1
+mysql> select count(*)
+    -> from emp
+    -> where sal<2000 and deptno=10;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select deptno,sal
+    -> from emp
+    -> where deptno=10;
++--------+---------+
+| deptno | sal     |
++--------+---------+
+|     10 | 2450.00 |
+|     10 | 5000.00 |
+|     10 | 1300.00 |
++--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select deptno,sal,ename
+    -> from emp
+    -> where deptno=10;
++--------+---------+--------+
+| deptno | sal     | ename  |
++--------+---------+--------+
+|     10 | 2450.00 | CLARK  |
+|     10 | 5000.00 | KING   |
+|     10 | 1300.00 | MILLER |
++--------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select count(*),ename
+    -> from emp
+    -> where sal<2000 and deptno=10;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #2 of SELECT list contains nonaggregated column 'kgcas.emp.ename'; this is incompatible with sql_mode=only_full_group_by
+mysql> select sum(sal)
+    -> from emp
+    -> where job='clerk';
++----------+
+| sum(sal) |
++----------+
+|  4150.00 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select ename, sum(sal)
+    -> from emp
+    -> where job='clerk';
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'kgcas.emp.ename'; this is incompatible with sql_mode=only_full_group_by
+mysql> select sum(sal)
+    -> from emp
+    -> where job='clerk'
+    -> group by ename;
++----------+
+| sum(sal) |
++----------+
+|   800.00 |
+|  1100.00 |
+|   950.00 |
+|  1300.00 |
++----------+
+4 rows in set (0.00 sec)
+
+mysql> select avg(sal)
+    -> from emp
+    -> ;
++-------------+
+| avg(sal)    |
++-------------+
+| 2073.214286 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(sal),count(sal),count(ename),max(sal)
+    -> from emp;
++-------------+------------+--------------+----------+
+| avg(sal)    | count(sal) | count(ename) | max(sal) |
++-------------+------------+--------------+----------+
+| 2073.214286 |         14 |           14 |  5000.00 |
++-------------+------------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(sal),sum(sal),count(ename),max(sal)
+    -> from emp;
++-------------+----------+--------------+----------+
+| avg(sal)    | sum(sal) | count(ename) | max(sal) |
++-------------+----------+--------------+----------+
+| 2073.214286 | 29025.00 |           14 |  5000.00 |
++-------------+----------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(sal)
+    -> from emp
+    -> group by job;
++----------+
+| sum(sal) |
++----------+
+|  4150.00 |
+|  5600.00 |
+|  8275.00 |
+|  6000.00 |
+|  5000.00 |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(sal),job
+    -> from emp
+    -> group by job;
++----------+-----------+
+| sum(sal) | job       |
++----------+-----------+
+|  4150.00 | CLERK     |
+|  5600.00 | SALESMAN  |
+|  8275.00 | MANAGER   |
+|  6000.00 | ANALYST   |
+|  5000.00 | PRESIDENT |
++----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select count(dept)
+    -> from emp
+    -> group by dept;
+ERROR 1054 (42S22): Unknown column 'dept' in 'field list'
+mysql> select (*)
+    -> from emp
+    -> group by deptno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*)
+from emp
+group by deptno' at line 1
+mysql> select (*)
+    -> from emp
+    -> from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*)
+from emp
+from emp' at line 1
+mysql> select count(*)
+    -> from emp;
++----------+
+| count(*) |
++----------+
+|       14 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select count(*)
+    -> from emp;
++----------+
+| count(*) |
++----------+
+|       14 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(sal),mgr
+    -> from emp
+    -> group by mgr;
++-------------+------+
+| avg(sal)    | mgr  |
++-------------+------+
+|  800.000000 | 7902 |
+| 1310.000000 | 7698 |
+| 2758.333333 | 7839 |
+| 3000.000000 | 7566 |
+| 5000.000000 | NULL |
+| 1100.000000 | 7788 |
+| 1300.000000 | 7782 |
++-------------+------+
+7 rows in set (0.00 sec)
+
+mysql> select count(*)
+    -> from emp
+    -> group by deptno;
++----------+
+| count(*) |
++----------+
+|        5 |
+|        6 |
+|        3 |
++----------+
+3 rows in set (0.00 sec)
+
+mysql> select add(comm),job='salesman'
+    -> from emp
+    -> group by;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add(comm),job='salesman'
+from emp
+group by' at line 1
+mysql> select add(comm)
+    -> from emp
+    -> group by job='salesman';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add(comm)
+from emp
+group by job='salesman'' at line 1
+mysql> select count(*),deptno
+    -> from emp
+    -> where job='clerk'
+    -> group by deptno
+    ->
+    -> having count(*)>=2;
++----------+--------+
+| count(*) | deptno |
++----------+--------+
+|        2 |     20 |
++----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select sum(sal),job
+    -> from emp
+    -> group by job
+    -> having sum
+    -> having sum(sal)>5000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'having sum(sal)>5000' at line 5
+mysql> select sum(sal),job
+    -> from emp
+    -> group by job
+    -> having sum(sal)>5000;
++----------+----------+
+| sum(sal) | job      |
++----------+----------+
+|  5600.00 | SALESMAN |
+|  8275.00 | MANAGER  |
+|  6000.00 | ANALYST  |
++----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(sal),deptno
+    -> from emp
+    -> group by job
+    -> having sum(sal)>2000;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'kgcas.emp.deptno' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select avg(sal),job
+    -> from emp
+    -> group by job
+    -> having sum(sal)>2000;
++-------------+-----------+
+| avg(sal)    | job       |
++-------------+-----------+
+| 1037.500000 | CLERK     |
+| 1400.000000 | SALESMAN  |
+| 2758.333333 | MANAGER   |
+| 3000.000000 | ANALYST   |
+| 5000.000000 | PRESIDENT |
++-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> show table emp
+    -> show table emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp
+show table emp' at line 1
+mysql> show table emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp' at line 1
+mysql> desc emp;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| empno    | decimal(4,0) | NO   |     | NULL    |       |
+| ename    | varchar(10)  | YES  |     | NULL    |       |
+| job      | varchar(9)   | YES  |     | NULL    |       |
+| mgr      | decimal(4,0) | YES  |     | NULL    |       |
+| hiredate | date         | YES  |     | NULL    |       |
+| sal      | decimal(7,2) | YES  |     | NULL    |       |
+| comm     | decimal(7,2) | YES  |     | NULL    |       |
+| deptno   | decimal(2,0) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+8 rows in set (0.02 sec)
+
+mysql> select  * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal     | comm    | deptno |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+14 rows in set (0.00 sec)
