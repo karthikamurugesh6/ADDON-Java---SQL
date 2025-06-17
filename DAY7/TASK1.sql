@@ -12,11 +12,11 @@ CREATE TABLE course (
 
 
 INSERT INTO student (student_id, student_name, age) VALUES
-(1, 'Jumana', 20),
-(2, 'Rehana', 22),
-(3, 'Noufiya', 19),
-(4, 'Nafeesha', 21),
-(5, 'Inshira', 23);
+(1, 'aaaa', 20),
+(2, 'bbbb', 22),
+(3, 'cccc', 19),
+(4, 'dddd', 21),
+(5, 'eeee', 23);
 
 
 INSERT INTO course (course_id, course_name, course_fee) VALUES
